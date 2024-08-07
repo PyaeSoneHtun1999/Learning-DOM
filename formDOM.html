@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title>Form Events Example</title>
+    <style>
+      form {
+        width: 300px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+      }
+      .error {
+        border-color: red;
+      }
+      .success {
+        border-color: green;
+      }
+      .message {
+        color: red;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" id="hello" />
+    <form id="myForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required />
+      <span id="usernameError" class="message"></span>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+      <span id="emailError" class="message"></span>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var form = document.getElementById("myForm");
+        var usernameInput = document.getElementById("username");
+        var emailInput = document.getElementById("email");
+        var usernameError = document.getElementById("usernameError");
+        var emailError = document.getElementById("emailError");
+
+        // Validate username on input event
+        usernameInput.addEventListener("input", function () {
+          console.log(this.value);
+          if (this.value.length < 5) {
+            this.classList.add("error");
+            this.classList.remove("success");
+            usernameError.textContent =
+              "Username must be at least 5 characters long.";
+          } else {
+            this.classList.add("success");
+            this.classList.remove("error");
+            usernameError.textContent = "";
+          }
+        });
+
+        // Validate email on change event
+        emailInput.addEventListener("change", function () {
+          if (!emailInput.checkValidity()) {
+            emailInput.classList.add("error");
+            emailInput.classList.remove("success");
+            emailError.textContent = "Please enter a valid email address.";
+          } else {
+            emailInput.classList.add("success");
+            emailInput.classList.remove("error");
+            emailError.textContent = "";
+          }
+        });
+
+        // Handle form submission
+        form.addEventListener("submit", function (event) {
+          if (!usernameInput.checkValidity() || !emailInput.checkValidity()) {
+            event.preventDefault();
+            if (!usernameInput.checkValidity()) {
+              usernameInput.classList.add("error");
+              usernameError.textContent =
+                "Username must be at least 5 characters long.";
+            }
+            if (!emailInput.checkValidity()) {
+              emailInput.classList.add("error");
+              emailError.textContent = "Please enter a valid email address.";
+            }
+          }
+        });
+
+        // Handle form reset
+        form.addEventListener("reset", function () {
+          usernameInput.classList.remove("error", "success");
+          emailInput.classList.remove("error", "success");
+          usernameError.textContent = "";
+          emailError.textContent = "";
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Window Events Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      padding: 20px;
+    }
+    #loadMessage {
+      background-color: lightgreen;
+      padding: 10px;
+      display: none;
+    }
+    #resizeInfo, #scrollInfo {
+      margin: 20px 0;
+      padding: 10px;
+      background-color: lightyellow;
+      border: 1px solid #ccc;
+    }
+    .content {
+      height: 1500px;
+      background: linear-gradient(to bottom, #ffffff, #cccccc);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="loadMessage">Page has fully loaded!</div>
+    <div id="resizeInfo">Window size: <span id="windowSize"></span></div>
+    <div id="scrollInfo">Scroll position: <span id="scrollPosition"></span></div>
+    <div class="content">Scroll down to see more content...</div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var loadMessage = document.getElementById('loadMessage');
+      var windowSize = document.getElementById('windowSize');
+      var scrollPosition = document.getElementById('scrollPosition');
+
+      // Display message when page has fully loaded
+      window.addEventListener('load', function() {
+        loadMessage.style.display = 'block';
+      });
+
+      // Update window size information
+      function updateWindowSize() {
+        windowSize.textContent = window.innerWidth + 'x' + window.innerHeight;
+      }
+
+      // Update scroll position information
+      function updateScrollPosition() {
+        scrollPosition.textContent = window.scrollX + ', ' + window.scrollY;
+      }
+
+      // Initial update
+      updateWindowSize();
+      updateScrollPosition();
+
+      // Handle window resize event
+      window.addEventListener('resize', updateWindowSize);
+
+      // Handle window scroll event
+      window.addEventListener('scroll', updateScrollPosition);
+    });
+  </script>
+</body>
+</html>

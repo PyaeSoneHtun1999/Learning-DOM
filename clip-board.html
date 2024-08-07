@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clipboard Events Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    #textInput {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    #message {
+      padding: 10px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Clipboard Events Example</h1>
+  <textarea id="textInput" placeholder="Type some text here..."></textarea>
+  <div id="message"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var textInput = document.getElementById('textInput');
+      var message = document.getElementById('message');
+
+      // Handle copy event
+      textInput.addEventListener('copy', function(event) {
+        event.preventDefault();
+        var selectedText = window.getSelection().toString();
+        var modifiedText = selectedText.toUpperCase();
+        event.clipboardData.setData('text/plain', modifiedText);
+        message.textContent = 'Copied text: ' + modifiedText;
+      });
+
+      // Handle cut event
+      textInput.addEventListener('cut', function(event) {
+        event.preventDefault();
+        var selectedText = window.getSelection().toString();
+        var modifiedText = selectedText.toLowerCase();
+        event.clipboardData.setData('text/plain', modifiedText);
+        var remainingText = textInput.value.substring(0, textInput.selectionStart) + textInput.value.substring(textInput.selectionEnd);
+        textInput.value = remainingText;
+        message.textContent = 'Cut text: ' + modifiedText;
+      });
+
+      // Handle paste event
+      textInput.addEventListener('paste', function(event) {
+        event.preventDefault();
+        var pastedText = event.clipboardData.getData('text/plain');
+        var modifiedText = 'Pasted: ' + pastedText;
+        var cursorPosition = textInput.selectionStart;
+        textInput.value = textInput.value.substring(0, cursorPosition) + modifiedText + textInput.value.substring(cursorPosition);
+        message.textContent = 'Pasted text: ' + modifiedText;
+      });
+    });
+  </script>
+</body>
+</html>
