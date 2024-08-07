@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            scroll-behavior: smooth;
+        }
+        body{
+            height: 2000px;
+        }
+        nav{
+            height: 200px;
+            background: red;
+        }
+        main{
+            height: 100vh;
+            background: blue;
+        }
+        a{
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- ! window event သုံးပြီး scroll  ဆွဲခြင်း -->
+    <nav id="navBar"></nav>
+    <main></main>
+    <a href="#navBar" id="a"></a>
+
+    <script>
+        window.addEventListener('scroll',function(){
+            // console.log('hello world')
+            if(window.scrollY > 300){
+                document.getElementById('a').style.display = "block";
+            }else{
+                document.getElementById('a').style.display = "none";
+            }
+        })
+    </script>
+</body>
+</html>
